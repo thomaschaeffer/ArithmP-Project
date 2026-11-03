@@ -1,7 +1,5 @@
 name: Run the tests
-on:
-  push:
-    - dev/tests
+on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
