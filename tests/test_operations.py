@@ -1,0 +1,33 @@
+from arithmp.parser import Parser
+import pytest
+
+def test_mul():
+    parser = Parser()
+    assert( parser.parse("3 * 4"))==12.0
+    assert( parser.parse("3 * -1"))==-3.0
+
+def test_add():
+    parser = Parser()
+    assert( parser.parse("3 + 4"))==7
+
+def test_div():
+    parser = Parser()
+    assert( parser.parse("4 / 4"))==1.0
+    with pytest.raises(ZeroDivisionError):
+        parser.parse("4 / 0")
+
+def test_sub():
+    parser = Parser()
+    assert( parser.parse("10 - 4"))==6.0
+    assert( parser.parse("10 - -4"))==14.0
+
+
+def test_mod():
+    parser = Parser()
+    assert( parser.parse("12 % 4"))==0.0
+    assert( parser.parse("12 % 5"))==2.0
+    with pytest.raises(ZeroDivisionError):
+        parser.parse("0 % 0")
+
+
+

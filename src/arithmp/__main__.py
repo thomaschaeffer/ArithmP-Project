@@ -1,6 +1,6 @@
 import click
 
-from .parser import Parser
+from arithmp.parser import Parser
 
 
 @click.command()
@@ -14,3 +14,4 @@ def main(expression: str):
 
 if __name__ == "__main__":
     main()
+
