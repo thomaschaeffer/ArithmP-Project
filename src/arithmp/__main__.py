@@ -17,10 +17,10 @@ def _command(expression: str):
 def main(command: str |None,expression: str|None):
     if command is not None:
         return _command(command)
-    else:
+    if expression is not None:
         return _command(expression)
     
-    
+    raise click.UsageError("No expression wrote")
 
 
 
