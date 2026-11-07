@@ -31,3 +31,16 @@ def test_mod():
 
 
 
+def test_abs():
+    parser = Parser()
+    assert( parser.parse("abs(-5)"))==5.0
+    assert( parser.parse("abs(5)"))==5.0
+
+def test_round():
+    parser= Parser()
+    assert(parser.parse("round(10.2)"))==10.0
+    assert(parser.parse("round(10.6)"))==11.0
+
+    
+
+

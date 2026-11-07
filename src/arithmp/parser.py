@@ -13,6 +13,11 @@ _builtins = {
     "mod": operator.mod,
 }
 
+_functions = {
+    "abs" : abs,
+    "round" : round,
+}
+
 
 class Parser:
     def __init__(self):
@@ -42,6 +47,11 @@ class Parser:
                 return -self._eval(tree.children[0], variables)
             case "power":
                 return self._eval(tree.children[0], variables) ** self._eval(tree.children[1], variables)
+            case "function_call":
+                if isinstance(tree.children[1], Tree):
+                    return _functions[str(tree.children[0])](self._eval(tree.children[1].children[0], variables))
+                else:
+                    raise TypeError("Unexpected argument")
             case _:
                 raise ValueError(f"Unexpected tree data: {tree.data}")
 
