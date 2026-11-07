@@ -2,6 +2,7 @@ import click
 
 from arithmp.parser import Parser
 
+
 def _command(expression: str):
     parser = Parser()
     result = parser.parse(expression)
