@@ -15,11 +15,23 @@ def _interactive():
         result= parser.parse(expression)
         click.echo(result)
         
+def _command(expression: str):
+    parser = Parser()
+    result = parser.parse(expression)
+    click.echo(result)
+
+
 @click.command()
 @click.option("-c","command", type=str,required=False,default=None)
 @click.argument("expression", required=False)
 def main(command: str |None,expression: str|None):
+    if command is not None:
+        return _command(command)
+    if expression is not None:
+        return _command(expression)
+    
     return _interactive()
+
 
 
 if __name__ == "__main__":
