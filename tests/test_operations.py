@@ -29,7 +29,22 @@ def test_mod():
     with pytest.raises(ZeroDivisionError):
         parser.parse("0 % 0")
 
-def test_vairable():
+
+
+def test_abs():
+    parser = Parser()
+    assert( parser.parse("abs(-5)"))==5.0
+    assert( parser.parse("abs(5)"))==5.0
+
+def test_round():
+    parser= Parser()
+    assert(parser.parse("round(10.2)"))==10.0
+    assert(parser.parse("round(10.6)"))==11.0
+
+    
+
+
+def test_variable():
     parser  = Parser()
     assert( parser.parse("a = 10"))==10.0
     assert(parser.parse("b = a * 2 "))==20.0
