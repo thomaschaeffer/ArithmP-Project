@@ -2,6 +2,7 @@ import click
 
 from arithmp.parser import Parser
 
+
 def _interactive():
     parser = Parser()
     click.echo("Arithmp interactive interpreter: write quit to leave")
