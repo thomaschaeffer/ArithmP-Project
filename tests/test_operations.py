@@ -44,3 +44,9 @@ def test_round():
     
 
 
+def test_variable():
+    parser  = Parser()
+    assert( parser.parse("a = 10"))==10.0
+    assert(parser.parse("b = a * 2 "))==20.0
+    assert(parser.parse("b = b +a" ))==30.0
+    

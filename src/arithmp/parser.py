@@ -1,6 +1,5 @@
 import math
 import operator
-from collections.abc import Mapping
 from pathlib import Path
 
 from lark import Lark, Token, Tree
@@ -25,9 +24,9 @@ class Parser:
             Path(__file__).parent.joinpath("arithmp.lark").read_text(), parser="lalr"
         )
 
-        self._variables: Mapping[str, float] = {"pi": math.pi, "e": math.exp(1)}
+        self._variables: dict[str, float] = {"pi": math.pi, "e": math.exp(1)}
 
-    def _eval(self, tree: Tree[Token] | Token, variables: Mapping[str, float]) -> float:
+    def _eval(self, tree: Tree[Token] | Token, variables: dict[str, float]) -> float:
         if isinstance(tree, Token):
             if tree.type == "NUMBER":
                 return float(tree.value)
@@ -52,6 +51,14 @@ class Parser:
                     return _functions[str(tree.children[0])](self._eval(tree.children[1].children[0], variables))
                 else:
                     raise TypeError("Unexpected argument")
+            case "variable_assignment":
+                var_name = str(tree.children[0])
+                var_value = self._eval(tree.children[1],variables)
+                variables[var_name]=var_value
+                return var_value
+            case "variable":
+                var_name = str(tree.children[0])
+                return variables[var_name]
             case _:
                 raise ValueError(f"Unexpected tree data: {tree.data}")
 
@@ -59,6 +66,9 @@ class Parser:
     self,
     expression: str,
     *,
-    variables: Mapping[str, float] = {}
+    variables: dict[str, float] | None = None
     ) -> float:
-        return self._eval(self.parser.parse(expression), {**self._variables, **variables})
+        if variables is not None:
+            self._variables.update(variables)
+        return self._eval(self.parser.parse(expression),self._variables)
+         
