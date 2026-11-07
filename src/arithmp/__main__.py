@@ -2,14 +2,23 @@ import click
 
 from arithmp.parser import Parser
 
-
-@click.command()
-@click.argument("expression")
-def main(expression: str):
+def _interactive():
     parser = Parser()
-    result = parser.parse(expression)
-
-    click.echo(result)
+    click.echo("Arithmp interactive interpreter: write quit to leave")
+    while True:
+        expression = input("Input: ")
+        if expression == "quit":
+            break
+        if expression=="":
+            continue
+        result= parser.parse(expression)
+        click.echo(result)
+        
+@click.command()
+@click.option("-c","command", type=str,required=False,default=None)
+@click.argument("expression", required=False)
+def main(command: str |None,expression: str|None):
+    return _interactive()
 
 
 if __name__ == "__main__":
