@@ -29,5 +29,9 @@ def test_mod():
     with pytest.raises(ZeroDivisionError):
         parser.parse("0 % 0")
 
-
-
+def test_vairable():
+    parser  = Parser()
+    assert( parser.parse("a = 10"))==10.0
+    assert(parser.parse("b = a * 2 "))==20.0
+    assert(parser.parse("b = b +a" ))==30.0
+    
