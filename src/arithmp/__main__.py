@@ -3,12 +3,22 @@ import click
 from arithmp.parser import Parser
 
 
+def _interactive():
+    parser = Parser()
+    click.echo("Arithmp interactive interpreter: write quit to leave")
+    while True:
+        expression = input("Input: ")
+        if expression == "quit":
+            break
+        if expression=="":
+            continue
+        result= parser.parse(expression)
+        click.echo(result)
+        
 def _command(expression: str):
     parser = Parser()
     result = parser.parse(expression)
     click.echo(result)
-
-
 
 
 @click.command()
@@ -20,7 +30,7 @@ def main(command: str |None,expression: str|None):
     if expression is not None:
         return _command(expression)
     
-    raise click.UsageError("No expression wrote")
+    return _interactive()
 
 
 
